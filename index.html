@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sebastianoff</title>
+  <meta name="description" content="portfolio" />
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0b0c0f;
+      --fg: #e6e7ea;
+      --muted: #9aa3ad;
+      --edge: #1a1e24;
+      --accent: #7dcfff;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--fg);
+      font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+    .wrap {
+      max-width: 64ch;
+      margin: 0 auto;
+      padding: 12vh 1rem 18vh;
+    }
+    h1 {
+      font-size: clamp(2.25rem, 6vw, 3.5rem);
+      margin: 0 0 .25rem 0;
+      letter-spacing: -0.01em;
+    }
+    .tag {
+      color: var(--muted);
+      margin: 0 0 1.5rem 0;
+    }
+    hr {
+      border: 0;
+      height: 1px;
+      background: var(--edge);
+      margin: 1.25rem 0 1.75rem;
+    }
+    nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    nav li {
+      margin: .6rem 0;
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+    }
+    a {
+      color: var(--fg);
+      text-decoration: none;
+      border-bottom: 1px dashed var(--edge);
+      text-underline-offset: .25em;
+      transition: border-color .15s ease, color .15s ease;
+    }
+    a:hover, a:focus-visible {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+      outline: none;
+    }
+    .stack {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: .5rem;
+    }
+    .stack li {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: .95rem;
+      color: var(--fg);
+      border: 1px dashed var(--edge);
+      border-radius: 6px;
+      padding: .3rem .55rem;
+    }
+    .stack {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: .5rem;
+    }
+    .stack li {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: .95rem;
+      color: var(--fg);
+      border: 1px dashed var(--edge);
+      border-radius: 6px;
+      padding: .3rem .55rem;
+    }
+    .projects {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .projects li {
+      margin: .85rem 0;
+    }
+    .meta {
+      display: block;
+      color: var(--muted);
+      font-size: .95rem;
+      margin-top: .25rem;
+    }
+    kbd {
+      font: 500 .75rem/1 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      color: var(--muted);
+      border: 1px solid var(--edge);
+      border-bottom-width: 2px;
+      padding: .15rem .4rem;
+      border-radius: 6px;
+      background: transparent;
+      user-select: none;
+    }
+    .copied {
+      color: var(--muted);
+      font-size: .9rem;
+      opacity: 0;
+      transition: opacity .15s ease;
+      user-select: none;
+    }
+    .copied.show { opacity: 1; }
+    ::selection { background: rgba(255,255,255,.08); }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <h1>Sebastianoff</h1>
+    <p class="tag">Hobbyist low-level programmer</p>
+    <hr>
+
+    <nav aria-label="Main links">
+      <ul>
+        <li>
+          <a id="github" href="https://github.com/sebastianoff" target="_blank" rel="noopener noreferrer" aria-label="GitHub (G)">GitHub</a>
+          <kbd title="shortcut">g</kbd>
+        </li>
+        <li>
+          <a id="email" href="mailto:cheesecakeycat@protonmail.com" data-email="cheesecakeycat@protonmail.com" aria-label="Email (E)">Email</a>
+          <kbd title="shortcut">e</kbd>
+          <span id="copied" class="copied" aria-live="polite" aria-hidden="true">copied</span>
+        </li>
+      </ul>
+    </nav>
+
+    <hr>
+
+    <section aria-labelledby="stack">
+      <h2 id="stack">I work with</h2>
+      <ul class="stack">
+        <li>Zig</li>
+        <li>C</li>
+        <li>NixOS</li>
+        <li>Neovim</li>
+      </ul>
+    </section>
+
+<!--
+TODO put projects once i actually have something to show lmao
+    <section aria-labelledby="projects">
+      <h2 id="projects">Projects</h2>
+      <ul class="projects">
+        <li>
+          <a href="Link" target="_blank" rel="noopener noreferrer">zig-tool</a>
+          <span class="meta">Cool thing</span>
+        </li>
+    </section>
+-->
+  </main>
+
+  <script>
+    (function () {
+      const github = document.getElementById('github');
+      const emailLink = document.getElementById('email');
+      const copied = document.getElementById('copied');
+      const email = emailLink?.dataset.email || (emailLink?.getAttribute('href') || '').replace(/^mailto:/, '');
+
+      function showCopiedHint() {
+        if (!copied) return;
+        copied.classList.add('show');
+        copied.setAttribute('aria-hidden', 'false');
+        clearTimeout(showCopiedHint._t);
+        showCopiedHint._t = setTimeout(() => {
+          copied.classList.remove('show');
+          copied.setAttribute('aria-hidden', 'true');
+        }, 1200);
+      }
+
+      async function copyEmail() {
+        if (!email) return;
+        try {
+          if (navigator.clipboard && window.isSecureContext) {
+            await navigator.clipboard.writeText(email);
+          } else {
+            const ta = document.createElement('textarea');
+            ta.value = email;
+            ta.style.position = 'fixed';
+            ta.style.opacity = '0';
+            document.body.appendChild(ta);
+            ta.focus();
+            ta.select();
+            document.execCommand('copy');
+            ta.remove();
+          }
+          showCopiedHint();
+        } catch (_) {
+          emailLink?.click();
+        }
+      }
+
+      document.addEventListener('keydown', (ev) => {
+        const tag = (ev.target && ev.target.tagName) ? ev.target.tagName.toLowerCase() : '';
+        if (['input', 'textarea', 'select'].includes(tag)) return;
+        if (ev.ctrlKey || ev.altKey || ev.metaKey) return;
+
+        const k = ev.key.toLowerCase();
+        if (k === 'g' && github) {
+          ev.preventDefault();
+          const href = github.getAttribute('href');
+          try { window.open(href, '_blank', 'noopener'); } catch (_) { location.href = href; }
+        } else if (k === 'e') {
+          ev.preventDefault();
+          copyEmail();
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
